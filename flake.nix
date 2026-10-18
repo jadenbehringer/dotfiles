@@ -18,9 +18,9 @@
     let
       # The one username line to change if this isn't your machine.
       user = "jaden";
-    in
-    {
-      darwinConfigurations."mac" = nix-darwin.lib.darwinSystem {
+
+      # Light base shared by every profile; extraModules layer more on top.
+      mkMac = extraModules: nix-darwin.lib.darwinSystem {
         specialArgs = { inherit user; };
         modules = [
           ./configuration.nix
@@ -32,7 +32,11 @@
             home-manager.extraSpecialArgs = { inherit user; };
             home-manager.users.${user} = import ./home.nix;
           }
-        ];
+        ] ++ extraModules;
       };
+    in
+    {
+      darwinConfigurations."mac" = mkMac [ ];
+      darwinConfigurations."mac-full" = mkMac [ ./full.nix ];
     };
 }
