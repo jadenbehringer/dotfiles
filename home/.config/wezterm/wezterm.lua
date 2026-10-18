@@ -2,7 +2,13 @@ local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 
-config.color_scheme = "rose-pine-moon"
+-- Stock rose-pine-moon, except selection: its highlight_med background vanishes
+-- on the translucent window, so use solid iris with base-colored text.
+local scheme = wezterm.color.get_builtin_schemes()["rose-pine-moon"]
+scheme.selection_bg = "#c4a7e7"
+scheme.selection_fg = "#232136"
+config.color_schemes = { ["rose-pine-moon-selection"] = scheme }
+config.color_scheme = "rose-pine-moon-selection"
 config.font = wezterm.font("Hack Nerd Font")
 config.font_size = 15.0
 config.window_background_opacity = 0.8

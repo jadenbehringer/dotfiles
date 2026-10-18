@@ -22,6 +22,9 @@ return {
       -- Make the dimmed directory path in the Snacks picker readable
       local palette = require('rose-pine.palette')
       vim.api.nvim_set_hl(0, 'SnacksPickerDir', { fg = palette.subtle })
+      -- Visual selection: rose-pine's highlight_med is near-invisible over the
+      -- transparent background; match wezterm's solid iris selection.
+      vim.api.nvim_set_hl(0, 'Visual', { bg = palette.iris, fg = palette.base })
     end,
   },
 }
