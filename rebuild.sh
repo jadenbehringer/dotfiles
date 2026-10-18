@@ -10,4 +10,14 @@ case "${1:-light}" in
   full)  HOST="mac-full" ;;
   *) echo "usage: $0 [light|full]" >&2; exit 1 ;;
 esac
-exec sudo darwin-rebuild switch --flake ~/.dotfiles#"$HOST"
+
+# Homebrew .pkg casks (e.g. Microsoft Office) and `mas install` call sudo
+# themselves mid-run, without a TTY to prompt on. Authenticate once up front
+# and refresh the timestamp until the rebuild exits, so long downloads don't
+# outlive sudo's 5-minute credential cache.
+sudo -v
+while true; do sudo -n true; sleep 60; done 2>/dev/null &
+KEEPALIVE=$!
+trap 'kill "$KEEPALIVE" 2>/dev/null' EXIT
+
+sudo darwin-rebuild switch --flake ~/.dotfiles#"$HOST"
