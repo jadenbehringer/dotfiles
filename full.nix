@@ -19,15 +19,8 @@
     "telegram"            # native macOS client (not "telegram-desktop")
   ];
 
-  # Mac App Store apps (needs App Store sign-in; `mas` is the CLI that installs them).
-  # Removing an entry does NOT uninstall the app - Homebrew cleanup never removes
-  # App Store apps.
-  homebrew.brews = [ "mas" ];
-  homebrew.masApps = {
-    "Notability" = 360593530;
-    "Muse from Meta" = 6760173601;
-  };
-
-  # MATLAB has no Homebrew cask; install it manually with the MathWorks installer.
-  # Homebrew cleanup never touches manually installed apps.
+  # Manual installs (no cask; Homebrew cleanup never touches these):
+  # - MATLAB: MathWorks installer (TAMU license)
+  # - Muse from Meta: https://ai.meta.com/muse/download/ (Mac App Store listing is iPhone/iPad only)
+  # - Notability: App Store > "iPhone & iPad Apps" (iPad app; mas can't install it)
 }
