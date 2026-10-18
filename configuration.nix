@@ -46,6 +46,8 @@
       "wezterm@nightly"  # conflicts with "wezterm"; keep only one
       "claude-code"
       "font-hack-nerd-font"
+      "google-chrome"
+      "tailscale-app"    # Tailscale GUI + CLI (the old "tailscale" cask was renamed to this)
     ];
   };
 }
