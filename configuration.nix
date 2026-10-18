@@ -40,6 +40,7 @@
       "herdr"
       "git"
       "fnm"  # Node version manager; provides node/npm
+      "gh"   # GitHub CLI
     ];
     casks = [
       "wezterm@nightly"  # conflicts with "wezterm"; keep only one
