@@ -16,6 +16,31 @@ config.macos_window_background_blur = 50
 config.hide_tab_bar_if_only_one_tab = true
 config.window_decorations = "RESIZE"
 
+-- No title bar, so Cmd+drag is the only way to move the window. mouse_reporting
+-- = true keeps it working when a TUI (herdr) has captured the mouse. The press
+-- and release are swallowed too: macOS eats the release during a window drag,
+-- so a forwarded press would leave the TUI thinking the button is still held.
+config.mouse_bindings = {
+	{
+		event = { Down = { streak = 1, button = "Left" } },
+		mods = "SUPER",
+		mouse_reporting = true,
+		action = wezterm.action.Nop,
+	},
+	{
+		event = { Drag = { streak = 1, button = "Left" } },
+		mods = "SUPER",
+		mouse_reporting = true,
+		action = wezterm.action.StartWindowDrag,
+	},
+	{
+		event = { Up = { streak = 1, button = "Left" } },
+		mods = "SUPER",
+		mouse_reporting = true,
+		action = wezterm.action.Nop,
+	},
+}
+
 -- Dim unfocused windows so the focused one is obvious at a glance.
 local UNFOCUSED_FOREGROUND_TEXT_HSB = { hue = 1.0, saturation = 0.25, brightness = 0.45 }
 local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = 0.62
