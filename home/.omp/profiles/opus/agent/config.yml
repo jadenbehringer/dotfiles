@@ -1,0 +1,33 @@
+modelRoles:
+  smol: opencode-go/deepseek-v4.1-flash:high
+  slow: opencode-go/deepseek-v4.1-flash:high
+  plan: anthropic/claude-opus-5:high
+  default: anthropic/claude-opus-5-5:medium
+task:
+  agentModelOverrides:
+    scout: opencode-go/deepseek-v4.1-flash:high
+    librarian: opencode-go/deepseek-v4.1-flash:high
+    sonic: opencode-go/deepseek-v4.1-flash:high
+    reviewer: opencode-go/deepseek-v4.1-flash:high
+    designer: opencode-go/deepseek-v4.1-flash:high
+    task: opencode-go/deepseek-v4.1-flash:high
+    security-reviewer: opencode-go/deepseek-v4.1-flash:high
+retry:
+  fallbackChains:
+    anthropic/claude-opus-5:
+      - opencode-zen/muse-spark-1.3-contributor-free
+    anthropic/*:
+      - opencode-zen/muse-spark-1.3-contributor-free
+    default:
+      - opencode-zen/muse-spark-1.3-contributor-free
+  modelFallback: true
+symbolPreset: unicode
+composer:
+  shape: box
+theme:
+  dark: titanium
+setupVersion: 2
+browser:
+  relay: true
+dev:
+  autoqaConsent: granted

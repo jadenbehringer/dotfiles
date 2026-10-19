@@ -1,0 +1,81 @@
+{
+    "workbench.colorTheme": "Visual Studio Dark",
+    "files.autoSave": "afterDelay",
+    "editor.fontSize": 12,
+    "extensions.ignoreRecommendations": true,
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "github.copilot.nextEditSuggestions.enabled": false,
+    "workbench.startupEditor": "none",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "chat.agent.maxRequests": 50,
+    "explorer.confirmDelete": false,
+    "chat.tools.terminal.autoApprove": {
+        "pnpm": true
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "chat.viewSessions.orientation": "stacked",
+    "explorer.confirmPasteNative": false,
+    "chat.editing.confirmEditRequestRemoval": false,
+    "python.defaultInterpreterPath": "/Users/jadenbehringer/.pyenv/versions/3.12.12/bin/python",
+    "python-envs.defaultEnvManager": "ms-python.python:pyenv",
+    "editor.inlineSuggest.experimental.showOnSuggestConflict": "always",
+    "github.copilot.enable": {
+        "scminput": true,
+        "markdown": true,
+        "plaintext": true
+    },
+    "editor.quickSuggestions": {
+        "strings": "on",
+        "comments": "on"
+    },
+    "chat.checkpoints.showFileChanges": true,
+
+    // --- LaTeX Workshop Hardcoded Paths ---
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "/Library/TeX/texbin/latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "/Library/TeX/texbin/pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        }
+    ],
+    // --- SyncTeX and PDF View Options ---
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.outDir": "%DIR%",
+    "latex-workshop.latex.rootFile.strategy": "current",
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+
+    "[markdown]": {
+        "editor.quickSuggestions": {
+            "comments": "off",
+            "strings": "off",
+            "other": "off"
+        },
+        "editor.suggestOnTriggerCharacters": false,
+        "editor.inlineSuggest.enabled": false,
+        "editor.wordBasedSuggestions": "off"
+    },
+    "haskell.manageHLS": "PATH",
+    "explorer.confirmDragAndDrop": false,
+    "redhat.telemetry.enabled": true
+}

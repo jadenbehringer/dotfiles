@@ -3,21 +3,27 @@ set -euo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 ln -sfn "$DIR" ~/.dotfiles
 
-# ./rebuild.sh        -> light profile (#mac)
-# ./rebuild.sh full   -> full profile  (#mac-full)
+# Configs are named after the macOS user (see forUser in flake.nix).
+# ./rebuild.sh        -> light profile (#<user>)
+# ./rebuild.sh full   -> full profile  (#<user>-full)
+USER_NAME="$(whoami)"
 case "${1:-light}" in
-  light) HOST="mac" ;;
-  full)  HOST="mac-full" ;;
+  light) HOST="$USER_NAME" ;;
+  full)  HOST="$USER_NAME-full" ;;
   *) echo "usage: $0 [light|full]" >&2; exit 1 ;;
 esac
 
-# Homebrew .pkg casks (e.g. Microsoft Office) and `mas install` call sudo
-# themselves mid-run, without a TTY to prompt on. Authenticate once up front
-# and refresh the timestamp until the rebuild exits, so long downloads don't
-# outlive sudo's 5-minute credential cache.
-sudo -v
-while true; do sudo -n true; sleep 60; done 2>/dev/null &
-KEEPALIVE=$!
-trap 'kill "$KEEPALIVE" 2>/dev/null' EXIT
+# Homebrew .pkg casks (e.g. Office, MacTeX) call sudo mid-run, and every brew
+# command clears the cached sudo login, so expect Touch ID prompts during the
+# rebuild (see security.pam in configuration.nix). The first run on a new Mac,
+# before Touch ID for sudo is set up, asks for the password instead.
 
-sudo darwin-rebuild switch --flake ~/.dotfiles#"$HOST"
+# First run on a new Mac: darwin-rebuild isn't installed yet, so run it from nix-darwin.
+# Check the installed path, not PATH: a shell opened before nix-darwin's first
+# activation lacks /run/current-system/sw/bin and would needlessly take this branch.
+DARWIN_REBUILD=/run/current-system/sw/bin/darwin-rebuild
+if [ -x "$DARWIN_REBUILD" ]; then
+  sudo "$DARWIN_REBUILD" switch --flake ~/.dotfiles#"$HOST"
+else
+  sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake ~/.dotfiles#"$HOST"
+fi

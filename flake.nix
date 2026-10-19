@@ -16,11 +16,8 @@
 
   outputs = inputs@{ self, nix-darwin, nix-homebrew, home-manager, nixpkgs }:
     let
-      # The one username line to change if this isn't your machine.
-      user = "jaden";
-
       # Light base shared by every profile; extraModules layer more on top.
-      mkMac = extraModules: nix-darwin.lib.darwinSystem {
+      mkMac = user: extraModules: nix-darwin.lib.darwinSystem {
         specialArgs = { inherit user; };
         modules = [
           ./configuration.nix
@@ -29,14 +26,24 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            # Existing ~/.zshrc etc. get renamed to *.before-home-manager instead of blocking.
+            home-manager.backupFileExtension = "before-home-manager";
             home-manager.extraSpecialArgs = { inherit user; };
             home-manager.users.${user} = import ./home.nix;
           }
         ] ++ extraModules;
       };
+
+      # Each Mac's configs are named after its macOS username, so rebuild.sh
+      # can pick the right one with `whoami`.
+      forUser = user: {
+        ${user} = mkMac user [ ];
+        "${user}-full" = mkMac user [ ./full.nix ];
+      };
     in
     {
-      darwinConfigurations."mac" = mkMac [ ];
-      darwinConfigurations."mac-full" = mkMac [ ./full.nix ];
+      darwinConfigurations =
+        forUser "jaden"             # desktop
+        // forUser "jadenbehringer"; # laptop
     };
 }
