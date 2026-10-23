@@ -61,7 +61,7 @@ in
     "microsoft-word"
     "microsoft-powerpoint"
     "canva"
-    "orcaslicer"
+    "orcaslicer@nightly"  # nightly for Bambu A2L support (not in 2.4.x stable)
     "arduino-ide"
     "figma"
     "telegram"            # native macOS client (not "telegram-desktop")

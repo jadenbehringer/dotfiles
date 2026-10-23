@@ -2,7 +2,7 @@ modelRoles:
   smol: opencode-go/deepseek-v4.1-flash:high
   slow: opencode-go/deepseek-v4.1-flash:high
   plan: opencode-go/deepseek-v4.1-flash:high
-  default: opencode-go/space-bunny-free:high
+  default: opencode-go/omen-alpha
 task:
   agentModelOverrides:
     scout: opencode-go/deepseek-v4.1-flash:high
